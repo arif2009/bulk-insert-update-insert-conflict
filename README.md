@@ -67,3 +67,73 @@ Bulk update on conflict:
 ```
 python main.py ./data/data.json -o update-on-conflict
 ```
+
+#### Explaination:
+list structure we are going to insert into database:
+```bash
+data = [{
+    "uuid": 4294967812,
+    "data": "2017-01-01",
+    "min": 11.0,
+    "max": 224.0,
+    "avg": 0.6326606157518295
+  },
+  {
+    "uuid": 4294967813,
+    "data": "2017-01-01",
+    "min": 0.0,
+    "max": 224.0,
+    "avg": 12.007262137125508
+  }]
+```
+Bulk insert:
+
+```bash
+sql = (f"INSERT INTO bulktable (uuid, date, min, max, avg) VALUES (%s, %s, %s, %s, %s)")
+# Create a list of tuples
+tuples = list([(x['uuid'], x['data'], x['min'], x['max'], x['avg']) for x in data])
+cursor.executemany(sql, tuples)
+```
+
+Bulk update:
+```bash
+tuples = list(({'uuid': x['uuid'], 'data': x['data'], 'min': x['min'], 'max': x['max'], 'avg': x['avg']} for x in data))
+
+sql = (f"""UPDATE bulktable
+       SET min = %(min)s, max = %(max)s, avg = %(avg)s
+       WHERE uuid= %(uuid)s and date = %(data)s""")
+
+cursor.executemany(sql, tuples)
+```
+
+Bulk update on conflict:
+```bash
+sql = f"""INSERT INTO 
+        bulktable (uuid, date, min, max, avg) VALUES (%(uuid)s, %(data)s, %(min)s, %(max)s, %(avg)s)
+        ON CONFLICT(uuid, date)
+        DO UPDATE 
+        SET min = %(min)s, max = %(max)s, avg = %(avg)s"""
+
+tuples = list(({'uuid': x['uuid'], 'data': x['data'], 'min': x['min'], 'max': x['max'], 'avg': x['avg']} for x in data))
+    
+cursor.executemany(sql, tuples)
+```
+
+#### Python command-line:
+**argparse** is used to handle python command line input. 
+```bash
+# Initialize ArgumentParser
+parser = argparse.ArgumentParser()
+
+# Define required parameter 
+parser.add_argument("d", help="Destination Folder")
+
+# Define optional parameter
+parser.add_argument("-o", "--option", help="operation. Default: insert",
+                    choices=["insert", "update", "update-on-conflict"])
+                    
+# Retrieve parameter value
+args = parser.parse_args()
+path, option = args.d, args.option
+print("d:", path, "-o:", option)
+```
