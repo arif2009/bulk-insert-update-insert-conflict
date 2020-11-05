@@ -50,19 +50,19 @@ $ pip install -r requirements.txt
 
 #### Usages: 
 
-**Bulk insert**
+Bulk insert:
 
 ```
 python main.py ./data/data.json -o insert
 ```
 
-**Bulk update**
+Bulk update:
 
 ```
 python main.py ./data/data.json -o update
 ```
 
-**Bulk update on conflict**
+Bulk update on conflict:
 
 ```
 python main.py ./data/data.json -o update-on-conflict
