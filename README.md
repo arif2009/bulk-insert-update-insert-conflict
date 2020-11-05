@@ -31,7 +31,7 @@ DB_HOST=localhost
 
 ```
 #### Installation :
-Create databse named **BulkDB** and table named **bulktable**. You can create it manually or execute script **sql.sql** found in project root directory.
+Create database named **BulkDB** and table named **bulktable**. You can create it manually or execute script **sql.sql** found in the project root directory.
 
 Create virtual environment(venv)
 
