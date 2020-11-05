@@ -14,7 +14,7 @@ Besides that, we learn some more things like:
 - How to write Python command-line script
 - Optional and mandatory command-line argument
 
-#### Development Tools & Technology :
+#### Tools & Technology :
 ---
 * [Python 3.8.5](https://www.python.org/downloads/release/python-385/)
 * [psycopg2](https://www.psycopg.org/docs/)
