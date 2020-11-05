@@ -1,5 +1,5 @@
 <!-- @format -->
-### Python command line script for PostgreSQL bulk insert, update, update-on-conflict
+### Python command-line script for PostgreSQL bulk insert, update, update-on-conflict
 ---
 Nowadays data is one of the important things in the digital world. So most of the time we need to insert a list of data into the database. To insert a list of data into the database normally we do these things:
 1) Traverse all list and insert one item at a time
